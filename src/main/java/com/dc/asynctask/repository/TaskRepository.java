@@ -1,6 +1,6 @@
-package com.dc.asyncTaskApi.Repository;
+package com.dc.asynctask.repository;
 
-import com.dc.asyncTaskApi.model.Task;
+import com.dc.asynctask.model.Task;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 

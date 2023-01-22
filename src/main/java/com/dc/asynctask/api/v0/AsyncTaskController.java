@@ -1,9 +1,10 @@
-package com.dc.asyncTaskApi.api.v0;
+package com.dc.asynctask.api.v0;
 
-import com.dc.asyncTaskApi.dto.ResultDto;
-import com.dc.asyncTaskApi.dto.TaskDto;
-import com.dc.asyncTaskApi.model.Task;
-import com.dc.asyncTaskApi.service.TaskService;
+import com.dc.asynctask.dto.ResultDto;
+import com.dc.asynctask.dto.TaskDto;
+import com.dc.asynctask.model.Task;
+import com.dc.asynctask.service.TaskService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,8 +20,11 @@ public class AsyncTaskController {
     }
 
     @PostMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
-    public String createTask(@RequestBody TaskDto task) {
-        return taskService.createTask(task);
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public TaskDto createTask(@RequestBody TaskDto task) {
+        TaskDto createdTask = taskService.createTask(task);
+        taskService.processTask(createdTask.getId());
+        return createdTask;
     }
 
     @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -28,14 +32,14 @@ public class AsyncTaskController {
         return taskService.getAllTasks();
     }
 
-    @GetMapping(value = "/{id}/result", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/{id}/result")
     public ResultDto getTaskResult(@PathVariable String id) {
         return taskService.getResult(id);
     }
 
-    @GetMapping(value = "/{id}/status", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Double getTaskStatus(@PathVariable String id) {
-        return taskService.getStatus(id);
+    @GetMapping(value = "/{id}/status")
+    public TaskDto getTaskWithStatus(@PathVariable String id) {
+        return taskService.getTask(id);
     }
 
 }

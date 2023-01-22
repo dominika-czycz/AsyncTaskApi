@@ -1,6 +1,7 @@
-package com.dc.asyncTaskApi.api;
+package com.dc.asynctask.api;
 
-import com.dc.asyncTaskApi.annotation.HttpStatus;
+import com.dc.asynctask.annotation.HttpStatus;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -9,10 +10,12 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 @RestControllerAdvice
+@Log4j2
 public class ExceptionAdvice extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<Object> handleException(RuntimeException ex, WebRequest webRequest) {
+        log.error("Returning exception to the client", ex);
         return handleExceptionInternal(ex, ex, HttpHeaders.EMPTY, calculateHttpStatus(ex), webRequest);
     }
 

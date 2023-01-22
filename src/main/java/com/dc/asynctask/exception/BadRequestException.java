@@ -1,6 +1,6 @@
-package com.dc.asyncTaskApi.exception;
+package com.dc.asynctask.exception;
 
-import com.dc.asyncTaskApi.annotation.HttpStatus;
+import com.dc.asynctask.annotation.HttpStatus;
 
 @HttpStatus(org.springframework.http.HttpStatus.BAD_REQUEST)
 public class BadRequestException extends RuntimeException {
