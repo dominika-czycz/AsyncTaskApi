@@ -2,13 +2,15 @@ version: "3.3"
 services:
   api_service:
     build: .
-    restart: always
+    restart: on-failure
     ports:
       - "8080:8080"
     depends_on:
       - mongo_db
   mongo_db:
     image: "mongo:4.4.3"
-    restart: always
+    container_name: mongo
+    hostname: mongo
+    restart: unless-stopped
     ports:
       - "27017:27017"
