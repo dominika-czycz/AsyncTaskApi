@@ -1,12 +1,18 @@
 package com.dc.asynctask.dto;
 
 import com.dc.asynctask.model.Task;
+
+import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
+
+
 
 @Data
 public class TaskDto {
     private String id;
+    @NotEmpty
     private String input;
+    @NotEmpty
     private String pattern;
     private String status;
 

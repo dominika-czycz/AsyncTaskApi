@@ -2,8 +2,8 @@ package com.dc.asynctask.api.v0;
 
 import com.dc.asynctask.dto.ResultDto;
 import com.dc.asynctask.dto.TaskDto;
-import com.dc.asynctask.model.Task;
 import com.dc.asynctask.service.TaskService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -21,14 +21,14 @@ public class AsyncTaskController {
 
     @PostMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public TaskDto createTask(@RequestBody TaskDto task) {
+    public TaskDto createTask(@Valid @RequestBody TaskDto task) {
         TaskDto createdTask = taskService.createTask(task);
         taskService.processTask(createdTask.getId());
         return createdTask;
     }
 
     @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Task> getAllTasks() {
+    public List<TaskDto> getAllTasks() {
         return taskService.getAllTasks();
     }
 

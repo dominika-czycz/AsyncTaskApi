@@ -2,7 +2,6 @@ package com.dc.asynctask.model;
 
 import lombok.Data;
 import org.springframework.data.annotation.Id;
-//TODO DATA VALIDATION
 @Data
 public class Task {
     @Id

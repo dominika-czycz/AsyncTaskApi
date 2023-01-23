@@ -3,7 +3,7 @@ package com.dc.asynctask.service;
 import com.dc.asynctask.repository.TaskRepository;
 import com.dc.asynctask.dto.ResultDto;
 import com.dc.asynctask.dto.TaskDto;
-import com.dc.asynctask.exception.BadRequestException;
+import com.dc.asynctask.exception.NotFoundException;
 import com.dc.asynctask.model.Result;
 import com.dc.asynctask.model.Task;
 import lombok.SneakyThrows;
@@ -43,7 +43,7 @@ public class AsyncTaskService implements TaskService {
     @Override
     public void processTask(String taskId) {
         Task task = taskRepository.findById(taskId)
-                .orElseThrow(() -> new BadRequestException("No task with id: " + taskId));
+                .orElseThrow(() -> new NotFoundException("No task with id: " + taskId));
         log.info("Start of precessing the task with id {} ", taskId);
         task.setResult(findBestMatch(task));
         taskRepository.save(task);
@@ -71,7 +71,7 @@ public class AsyncTaskService implements TaskService {
 
             results.putIfAbsent(distance, new Result(i, distance));
             updateStatus(task, chunks, i);
-            Thread.sleep(5000);
+            Thread.sleep(1000);
         }
         return results.entrySet().stream().findFirst().get().getValue();
     }
@@ -83,21 +83,21 @@ public class AsyncTaskService implements TaskService {
     }
 
     @Override
-    public List<Task> getAllTasks() {
-        return taskRepository.findAll();
+    public List<TaskDto> getAllTasks() {
+        return taskRepository.findAll().stream().map(TaskDto::getDto).toList();
     }
 
     @Override
     public TaskDto getTask(String taskId) {
         Task task = taskRepository.findById(taskId)
-                .orElseThrow(() -> new BadRequestException("No task with id: " + taskId));
+                .orElseThrow(() -> new NotFoundException("No task with id: " + taskId));
         return TaskDto.getDto(task);
     }
 
     @Override
     public ResultDto getResult(String taskId) {
         Result result = taskRepository.findById(taskId)
-                .orElseThrow(() -> new BadRequestException("No task with id: " + taskId))
+                .orElseThrow(() -> new NotFoundException("No task with id: " + taskId))
                 .getResult();
         return result != null ? new ResultDto(result.getPosition(), result.getTypos()) : new ResultDto();
     }
