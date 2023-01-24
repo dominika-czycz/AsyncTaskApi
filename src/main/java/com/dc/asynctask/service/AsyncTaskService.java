@@ -11,6 +11,7 @@ import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.commons.text.similarity.LevenshteinDistance;
 
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
@@ -88,6 +89,7 @@ public class AsyncTaskService implements TaskService {
     }
 
     @Override
+    @Cacheable(value = "task", key = "#taskId", unless = "!#result.isDone()")
     public TaskDto getTask(String taskId) {
         Task task = taskRepository.findById(taskId)
                 .orElseThrow(() -> new NotFoundException("No task with id: " + taskId));
@@ -95,6 +97,7 @@ public class AsyncTaskService implements TaskService {
     }
 
     @Override
+    @Cacheable(value = "result", key = "#taskId", unless = "#result.getPosition()==null")
     public ResultDto getResult(String taskId) {
         Result result = taskRepository.findById(taskId)
                 .orElseThrow(() -> new NotFoundException("No task with id: " + taskId))

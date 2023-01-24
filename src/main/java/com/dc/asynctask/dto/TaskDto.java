@@ -2,9 +2,9 @@ package com.dc.asynctask.dto;
 
 import com.dc.asynctask.model.Task;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
-
 
 
 @Data
@@ -30,6 +30,10 @@ public class TaskDto {
         task.setPattern(pattern);
         task.setInput(input);
         return task;
+    }
+    @JsonIgnore
+    public boolean isDone() {
+        return status != null && this.status.equals("100%");
     }
 
 }
