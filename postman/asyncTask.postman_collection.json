@@ -1,0 +1,174 @@
+{
+	"info": {
+		"_postman_id": "d7529b4d-9a40-4ff9-a4ab-8dd3cf2e151d",
+		"name": "asyncTask",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "createTask",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e722621b-237f-4c47-abcd-7b1a741e817d",
+						"exec": [
+							"const id = pm.response.json().id;",
+							"",
+							"console.log(id);",
+							"",
+							"pm.environment.set(\"taskId\", id);",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"input\": \"ABCDFFF\",\n    \"pattern\": \"ABC\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v0/async/tasks",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v0",
+						"async",
+						"tasks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getStatus",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v0/async/tasks/{{taskId}}/status",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v0",
+						"async",
+						"tasks",
+						"{{taskId}}",
+						"status"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getResult",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v0/async/tasks/{{taskId}}/result",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v0",
+						"async",
+						"tasks",
+						"{{taskId}}",
+						"result"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getAll",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v0/async/tasks",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v0",
+						"async",
+						"tasks"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "27ab7e71-21a1-46be-8a3c-8142d0ffcee1",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "92ce23ae-f457-42ca-ad57-644859cdc4c3",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "d90bd5d0-5c2d-478e-b5e9-d53838be4cdd",
+			"key": "taskId",
+			"value": "0",
+			"type": "string"
+		}
+	]
+}
