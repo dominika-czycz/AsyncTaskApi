@@ -1,4 +1,4 @@
-package com.dc.asyncTaskApi;
+package com.dc.asynctask;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
